@@ -1,2 +1,2 @@
 # EtlFramework
-Metadata Drive ETL framework
+Metadata Driven ETL framework
