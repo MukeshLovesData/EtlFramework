@@ -43,7 +43,7 @@ import datetime
 key_vault = 'https://kv-bks-dev-neu-001.vault.azure.net/'
 driver= '{ODBC Driver 18 for SQL Server}'
 #server = mssparkutils.credentials.getSecret(key_vault,'fabric-control-db-server')
-server = 'qnevyyf2jhmu7h7c6l5skmjzji-nexjxahq4dou5odrhpss7p3kbe.datawarehouse.fabric.microsoft.com'
+server = ''
 database = 'DW_WH_ControlDB'
 fabric_client_id = mssparkutils.credentials.getSecret(key_vault,'fabric-client-id')
 fabric_client_secret = mssparkutils.credentials.getSecret(key_vault,'fabric-client-secret')
