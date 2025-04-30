@@ -1,0 +1,3584 @@
+{
+  "name": "{{Dataset_Name}}",
+  "compatibilityLevel": 1604,
+  "model": {
+    "name": "{{Dataset_Name}}",
+    "culture": "en-US",
+    "collation": "Latin1_General_100_BIN2_UTF8",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Azets_AccountDK",
+        "sourceLineageTag": "[stage].[Azets_AccountDK]",
+        "columns": [
+          {
+            "name": "AccountId",
+            "dataType": "string",
+            "sourceColumn": "AccountId",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "string",
+            "sourceColumn": "AccountNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountName",
+            "dataType": "string",
+            "sourceColumn": "AccountName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1ID",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel1ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel1ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2ID",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel2ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel2ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FinancialStatement",
+            "dataType": "string",
+            "sourceColumn": "FinancialStatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FinancialStatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_AccountDK",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Azets_AccountNO",
+        "sourceLineageTag": "[stage].[Azets_AccountNO]",
+        "columns": [
+          {
+            "name": "AccountId",
+            "dataType": "string",
+            "sourceColumn": "AccountId",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "string",
+            "sourceColumn": "AccountNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccoutName",
+            "dataType": "string",
+            "sourceColumn": "AccoutName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccoutName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1ID",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel1ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel1ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2ID",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel2ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel2ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Financialstatement",
+            "dataType": "string",
+            "sourceColumn": "Financialstatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Financialstatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_AccountNO",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Azets_AccountSE",
+        "sourceLineageTag": "[stage].[Azets_AccountSE]",
+        "columns": [
+          {
+            "name": "AccountId",
+            "dataType": "string",
+            "sourceColumn": "AccountId",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "string",
+            "sourceColumn": "AccountNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccoutName",
+            "dataType": "string",
+            "sourceColumn": "AccoutName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccoutName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1ID",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel1ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel1ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2ID",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel2ID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel2ID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Financialstatement",
+            "dataType": "string",
+            "sourceColumn": "Financialstatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Financialstatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_AccountSE",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Azets_CostCenterDK",
+        "sourceLineageTag": "[stage].[Azets_CostCenterDK]",
+        "columns": [
+          {
+            "name": "Dimensions",
+            "dataType": "string",
+            "sourceColumn": "Dimensions",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Dimensions",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterID",
+            "dataType": "string",
+            "sourceColumn": "CostCenterID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterNumber",
+            "dataType": "string",
+            "sourceColumn": "CostCenterNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterName",
+            "dataType": "string",
+            "sourceColumn": "CostCenterName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_CostCenterDK",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Azets_CostCenterNO",
+        "sourceLineageTag": "[stage].[Azets_CostCenterNO]",
+        "columns": [
+          {
+            "name": "Dimensions",
+            "dataType": "string",
+            "sourceColumn": "Dimensions",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Dimensions",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterID",
+            "dataType": "string",
+            "sourceColumn": "CostCenterID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterNumber",
+            "dataType": "string",
+            "sourceColumn": "CostCenterNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterName",
+            "dataType": "string",
+            "sourceColumn": "CostCenterName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_CostCenterNO",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Azets_CostCenterSE",
+        "sourceLineageTag": "[stage].[Azets_CostCenterSE]",
+        "columns": [
+          {
+            "name": "Dimensions",
+            "dataType": "string",
+            "sourceColumn": "Dimensions",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Dimensions",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterID",
+            "dataType": "string",
+            "sourceColumn": "CostCenterID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterNumber",
+            "dataType": "string",
+            "sourceColumn": "CostCenterNumber",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterNumber",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterName",
+            "dataType": "string",
+            "sourceColumn": "CostCenterName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileDate",
+            "dataType": "string",
+            "sourceColumn": "FileDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileTime",
+            "dataType": "string",
+            "sourceColumn": "FileTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FileName",
+            "dataType": "string",
+            "sourceColumn": "FileName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FileName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Azets_CostCenterSE",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "stage"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "DimAccount",
+        "sourceLineageTag": "[dbo].[DimAccount]",
+        "columns": [
+          {
+            "name": "DimAccountSk",
+            "dataType": "int64",
+            "sourceColumn": "DimAccountSk",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "DimAccountSk",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "DimAccountRk",
+            "dataType": "int64",
+            "sourceColumn": "DimAccountRk",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "DimAccountRk",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountId",
+            "dataType": "int64",
+            "sourceColumn": "AccountId",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "int64",
+            "sourceColumn": "AccountNumber",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountName",
+            "dataType": "string",
+            "sourceColumn": "AccountName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1ID",
+            "dataType": "int64",
+            "sourceColumn": "AccountLevel1ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountLevel1ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2ID",
+            "dataType": "int64",
+            "sourceColumn": "AccountLevel2ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountLevel2ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FinancialStatement",
+            "dataType": "string",
+            "sourceColumn": "FinancialStatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FinancialStatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "IsAggregated",
+            "dataType": "int64",
+            "sourceColumn": "IsAggregated",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "IsAggregated",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "ValidFrom",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "ValidTo",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Active",
+            "dataType": "boolean",
+            "sourceColumn": "Active",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "Active",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadedDateTime",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RunId",
+            "dataType": "string",
+            "sourceColumn": "RunId",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "RunId",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "DimAccount",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "DimAccountConfig",
+        "sourceLineageTag": "[config].[DimAccountConfig]",
+        "columns": [
+          {
+            "name": "DimAccountSk",
+            "dataType": "int64",
+            "sourceColumn": "DimAccountSk",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "DimAccountSk",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "DimAccountRk",
+            "dataType": "int64",
+            "sourceColumn": "DimAccountRk",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "DimAccountRk",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountId",
+            "dataType": "int64",
+            "sourceColumn": "AccountId",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "int64",
+            "sourceColumn": "AccountNumber",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountName",
+            "dataType": "string",
+            "sourceColumn": "AccountName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2",
+            "dataType": "string",
+            "sourceColumn": "AccountLevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountLevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel1ID",
+            "dataType": "int64",
+            "sourceColumn": "AccountLevel1ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountLevel1ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountLevel2ID",
+            "dataType": "int64",
+            "sourceColumn": "AccountLevel2ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountLevel2ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FinancialStatement",
+            "dataType": "string",
+            "sourceColumn": "FinancialStatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FinancialStatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "IsAggregated",
+            "dataType": "int64",
+            "sourceColumn": "IsAggregated",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "IsAggregated",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "ValidFrom",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidTo",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "ValidTo",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Active",
+            "dataType": "boolean",
+            "sourceColumn": "Active",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "Active",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "dateTime",
+            "sourceColumn": "LoadedDateTime",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RunId",
+            "dataType": "string",
+            "sourceColumn": "RunId",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "RunId",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "DimAccountConfig",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "config"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "DimAccountRecurring",
+        "sourceLineageTag": "[temp].[DimAccountRecurring]",
+        "columns": [
+          {
+            "name": "AccountId",
+            "dataType": "int64",
+            "sourceColumn": "AccountId",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountId",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "int64",
+            "sourceColumn": "AccountNumber",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "AccountNumber",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountName",
+            "dataType": "string",
+            "sourceColumn": "AccountName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountType",
+            "dataType": "string",
+            "sourceColumn": "AccountType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "AccountCategory",
+            "dataType": "string",
+            "sourceColumn": "AccountCategory",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "AccountCategory",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Description",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2",
+            "dataType": "string",
+            "sourceColumn": "Accountlevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Accountlevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel1ID",
+            "dataType": "int64",
+            "sourceColumn": "Accountlevel1ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "Accountlevel1ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Accountlevel2ID",
+            "dataType": "int64",
+            "sourceColumn": "Accountlevel2ID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "Accountlevel2ID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "FinancialStatement",
+            "dataType": "string",
+            "sourceColumn": "FinancialStatement",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "FinancialStatement",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "DimAccountRecurring",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "temp"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "DimCostCenter",
+        "sourceLineageTag": "[temp].[DimCostCenter]",
+        "columns": [
+          {
+            "name": "Dimensions",
+            "dataType": "string",
+            "sourceColumn": "Dimensions",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Dimensions",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterID",
+            "dataType": "int64",
+            "sourceColumn": "CostCenterID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "CostCenterID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterNumber",
+            "dataType": "int64",
+            "sourceColumn": "CostCenterNumber",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "CostCenterNumber",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostCenterName",
+            "dataType": "string",
+            "sourceColumn": "CostCenterName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostCenterName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "DimCostCenter",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "temp"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "DimsiteRecurring",
+        "sourceLineageTag": "[temp].[DimsiteRecurring]",
+        "columns": [
+          {
+            "name": "Country",
+            "dataType": "string",
+            "sourceColumn": "Country",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Country",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "BranchCodeAsset",
+            "dataType": "string",
+            "sourceColumn": "BranchCodeAsset",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "BranchCodeAsset",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SiteNumber",
+            "dataType": "int64",
+            "sourceColumn": "SiteNumber",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "SiteNumber",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SiteName",
+            "dataType": "string",
+            "sourceColumn": "SiteName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SiteName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "IsRestaurant",
+            "dataType": "string",
+            "sourceColumn": "IsRestaurant",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "IsRestaurant",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "HaveDelivery",
+            "dataType": "string",
+            "sourceColumn": "HaveDelivery",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "HaveDelivery",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "IsClosed",
+            "dataType": "string",
+            "sourceColumn": "IsClosed",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "IsClosed",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "HaveTakeout",
+            "dataType": "string",
+            "sourceColumn": "HaveTakeout",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "HaveTakeout",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RegisteredDate",
+            "dataType": "string",
+            "sourceColumn": "RegisteredDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "RegisteredDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Expired",
+            "dataType": "string",
+            "sourceColumn": "Expired",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Expired",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ExpiredDate",
+            "dataType": "string",
+            "sourceColumn": "ExpiredDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "ExpiredDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadedDateTime",
+            "dataType": "string",
+            "sourceColumn": "LoadedDateTime",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadedDateTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RegionalManager",
+            "dataType": "string",
+            "sourceColumn": "RegionalManager",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "RegionalManager",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranch",
+            "dataType": "string",
+            "sourceColumn": "MainBranch",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranch",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MainBranchLong",
+            "dataType": "string",
+            "sourceColumn": "MainBranchLong",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "MainBranchLong",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "CostOrProfit",
+            "dataType": "string",
+            "sourceColumn": "CostOrProfit",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "CostOrProfit",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Franchise",
+            "dataType": "string",
+            "sourceColumn": "Franchise",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Franchise",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "OpeningDate",
+            "dataType": "string",
+            "sourceColumn": "OpeningDate",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "OpeningDate",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SameStore",
+            "dataType": "string",
+            "sourceColumn": "SameStore",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SameStore",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ReportingLevel1",
+            "dataType": "string",
+            "sourceColumn": "ReportingLevel1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "ReportingLevel1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ReportingLevel2",
+            "dataType": "string",
+            "sourceColumn": "ReportingLevel2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "ReportingLevel2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "HQReportingOwnFZ",
+            "dataType": "string",
+            "sourceColumn": "HQReportingOwnFZ",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "HQReportingOwnFZ",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SiteCluster1",
+            "dataType": "string",
+            "sourceColumn": "SiteCluster1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SiteCluster1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SiteCluster2",
+            "dataType": "string",
+            "sourceColumn": "SiteCluster2",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SiteCluster2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Org2020",
+            "dataType": "string",
+            "sourceColumn": "Org2020",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Org2020",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Franchisee",
+            "dataType": "string",
+            "sourceColumn": "Franchisee",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Franchisee",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "DimsiteRecurring",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "temp"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "ETLLoads",
+        "sourceLineageTag": "[dbo].[ETLLoads]",
+        "columns": [
+          {
+            "name": "LoadID",
+            "dataType": "int64",
+            "sourceColumn": "LoadID",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "LoadID",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SourceZone",
+            "dataType": "string",
+            "sourceColumn": "SourceZone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SourceZone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SinkZone",
+            "dataType": "string",
+            "sourceColumn": "SinkZone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SinkZone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SourceName",
+            "dataType": "string",
+            "sourceColumn": "SourceName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SourceName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SourceType",
+            "dataType": "string",
+            "sourceColumn": "SourceType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SourceType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SinkType",
+            "dataType": "string",
+            "sourceColumn": "SinkType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SinkType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SourceEntityName",
+            "dataType": "string",
+            "sourceColumn": "SourceEntityName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SourceEntityName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "SinkEntityName",
+            "dataType": "string",
+            "sourceColumn": "SinkEntityName",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "SinkEntityName",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadType",
+            "dataType": "string",
+            "sourceColumn": "LoadType",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadType",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "LoadGroup",
+            "dataType": "string",
+            "sourceColumn": "LoadGroup",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LoadGroup",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Disabled",
+            "dataType": "boolean",
+            "sourceColumn": "Disabled",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "Disabled",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "RowCount",
+            "dataType": "int64",
+            "sourceColumn": "RowCount",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "RowCount",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "PipelineEndTime",
+            "dataType": "dateTime",
+            "sourceColumn": "PipelineEndTime",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "PipelineEndTime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "ETLLoads",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "dim_date",
+        "sourceLineageTag": "[dbo].[dim_date]",
+        "columns": [
+          {
+            "name": "sk_date",
+            "dataType": "int64",
+            "sourceColumn": "sk_date",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "sk_date",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "date",
+            "dataType": "dateTime",
+            "sourceColumn": "date",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "date",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "day",
+            "dataType": "int64",
+            "sourceColumn": "day",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "day",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "day_suffix",
+            "dataType": "string",
+            "sourceColumn": "day_suffix",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "day_suffix",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_day",
+            "dataType": "int64",
+            "sourceColumn": "week_day",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "week_day",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_day_name",
+            "dataType": "string",
+            "sourceColumn": "week_day_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "week_day_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_day_name_short",
+            "dataType": "string",
+            "sourceColumn": "week_day_name_short",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "week_day_name_short",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_day_name_first_letter",
+            "dataType": "string",
+            "sourceColumn": "week_day_name_first_letter",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "week_day_name_first_letter",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "DOW_in_month",
+            "dataType": "int64",
+            "sourceColumn": "DOW_in_month",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "DOW_in_month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "day_of_year",
+            "dataType": "int64",
+            "sourceColumn": "day_of_year",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "day_of_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_of_month",
+            "dataType": "int64",
+            "sourceColumn": "week_of_month",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "week_of_month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "week_of_year",
+            "dataType": "int64",
+            "sourceColumn": "week_of_year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "week_of_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month",
+            "dataType": "int64",
+            "sourceColumn": "month",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_name",
+            "dataType": "string",
+            "sourceColumn": "month_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "month_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_name_short",
+            "dataType": "string",
+            "sourceColumn": "month_name_short",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "month_name_short",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_name_first_letter",
+            "dataType": "string",
+            "sourceColumn": "month_name_first_letter",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "month_name_first_letter",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "quarter",
+            "dataType": "int64",
+            "sourceColumn": "quarter",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "quarter",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "quarter_name",
+            "dataType": "string",
+            "sourceColumn": "quarter_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "quarter_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "sourceColumn": "year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "MMYYYY",
+            "dataType": "string",
+            "sourceColumn": "MMYYYY",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "MMYYYY",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_year",
+            "dataType": "string",
+            "sourceColumn": "month_year",
+            "sourceProviderType": "char",
+            "sourceLineageTag": "month_year",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_weekend",
+            "dataType": "boolean",
+            "sourceColumn": "is_weekend",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "is_weekend",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_holiday",
+            "dataType": "boolean",
+            "sourceColumn": "is_holiday",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "is_holiday",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "holiday_name",
+            "dataType": "string",
+            "sourceColumn": "holiday_name",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "holiday_name",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "special_days",
+            "dataType": "string",
+            "sourceColumn": "special_days",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "special_days",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "financial_year",
+            "dataType": "int64",
+            "sourceColumn": "financial_year",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "financial_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "financial_quarter",
+            "dataType": "int64",
+            "sourceColumn": "financial_quarter",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "financial_quarter",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "financial_month",
+            "dataType": "int64",
+            "sourceColumn": "financial_month",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "financial_month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "first_date_of_year",
+            "dataType": "dateTime",
+            "sourceColumn": "first_date_of_year",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "first_date_of_year",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_date_of_year",
+            "dataType": "dateTime",
+            "sourceColumn": "last_date_of_year",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "last_date_of_year",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "first_date_of_quarter",
+            "dataType": "dateTime",
+            "sourceColumn": "first_date_of_quarter",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "first_date_of_quarter",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_date_of_quarter",
+            "dataType": "dateTime",
+            "sourceColumn": "last_date_of_quarter",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "last_date_of_quarter",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "first_date_of_month",
+            "dataType": "dateTime",
+            "sourceColumn": "first_date_of_month",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "first_date_of_month",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_date_of_month",
+            "dataType": "dateTime",
+            "sourceColumn": "last_date_of_month",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "last_date_of_month",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "first_date_of_week",
+            "dataType": "dateTime",
+            "sourceColumn": "first_date_of_week",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "first_date_of_week",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_date_of_week",
+            "dataType": "dateTime",
+            "sourceColumn": "last_date_of_week",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "last_date_of_week",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "current_year",
+            "dataType": "int64",
+            "sourceColumn": "current_year",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "current_year",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "current_quarter",
+            "dataType": "int64",
+            "sourceColumn": "current_quarter",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "current_quarter",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "current_month",
+            "dataType": "int64",
+            "sourceColumn": "current_month",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "current_month",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "current_week",
+            "dataType": "int64",
+            "sourceColumn": "current_week",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "current_week",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "current_day",
+            "dataType": "int64",
+            "sourceColumn": "current_day",
+            "formatString": "0",
+            "sourceProviderType": "smallint",
+            "sourceLineageTag": "current_day",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "dim_date",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "sales_data",
+        "sourceLineageTag": "[dbo].[sales_data]",
+        "columns": [
+          {
+            "name": "date",
+            "dataType": "dateTime",
+            "sourceColumn": "date",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "date",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "product",
+            "dataType": "string",
+            "sourceColumn": "product",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "product",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "sales",
+            "dataType": "int64",
+            "sourceColumn": "sales",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "sales",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "sales_data",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "kind": "m",
+        "expression": "let\n    database = {{TDS_Endpoint}}\nin\n    database\n"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "SourceLineageTagType",
+        "value": "DatabaseFullyQualifiedName"
+      }
+    ]
+  }
+}

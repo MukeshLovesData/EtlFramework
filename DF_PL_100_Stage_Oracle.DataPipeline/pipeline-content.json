@@ -1,0 +1,288 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_ApiToRaw_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "stage",
+              "type": "string"
+            },
+            "guestChecks_start_date": {
+              "value": {
+                "value": "@formatDateTime(activity('Get max date').output.firstRow.max_date,'yyyy-MM-dd')\n",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "guestChecks_end_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(utcnow(),-1),'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "guestChecks_off_till_start_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(activity('Get max date').output.firstRow.max_date,-6) ,'yyyy-MM-dd')\n",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "guestChecks_off_till_end_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(utcnow(),-2),'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "guestChecks_off_till_changed_since_datetime": {
+              "value": {
+                "value": "@formatDateTime(activity('Get max date').output.firstRow.max_date,'yyyy-MM-ddT00:00:00')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "menuItemDailyTotals_start_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(activity('Get max date').output.firstRow.max_date,-5) ,'yyyy-MM-dd')\n",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "menuItemDailyTotals_end_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(utcnow(),-1),'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "kdsDetails_start_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(utcnow(),-5),'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "kdsDetails_end_date": {
+              "value": {
+                "value": "@formatDateTime(adddays(utcnow(),-1),'yyyy-MM-dd')",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "locRef": {
+              "value": "all",
+              "type": "string"
+            },
+            "workspace_id": {
+              "value": {
+                "value": "@pipeline().parameters.Workspace_ID",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "de_lh_control_id": {
+              "value": {
+                "value": "@pipeline().parameters.DE_LH_CONTROL_ID",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.5:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 180,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "O2R - Stage Oracle API data",
+        "description": "Get data from Oracle API\nWrite Json files to DE_LH_100_RAW\\Files\\Entity\\\n\nDefault for facts,\n- guestChecks: get transactions with clsdBusDt = yesterday only (too much data otherwise. Handling off tills in next step)\n- menuItemDailyTotals: get rows with busDt from previous 4 days (to handle off tills)",
+        "dependsOn": [
+          {
+            "activity": "Get max date",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "68ab38b5-0276-b8a6-4c82-5acdc3649f26",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "LoadGroup": "flatt",
+            "Workspace_ID": {
+              "value": "@pipeline().parameters.Workspace_ID",
+              "type": "Expression"
+            },
+            "DE_LH_100_RAW_ID": {
+              "value": "@pipeline().parameters.DE_LH_100_RAW_ID",
+              "type": "Expression"
+            },
+            "LoadType": "dim"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "R2R - Flatten dimensions",
+        "description": "Read source Json files\nFlatten data \nAppend to Tables",
+        "dependsOn": [
+          {
+            "activity": "O2R - Stage Oracle API data",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_ArchiveFiles_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "flatt",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.1:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 180,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Archive files",
+        "description": "Move files to folder 'processed'",
+        "dependsOn": [
+          {
+            "activity": "R2R - Flatten facts",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "68ab38b5-0276-b8a6-4c82-5acdc3649f26",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "LoadGroup": "flatt",
+            "Workspace_ID": {
+              "value": "@pipeline().parameters.Workspace_ID",
+              "type": "Expression"
+            },
+            "DE_LH_100_RAW_ID": {
+              "value": "@pipeline().parameters.DE_LH_100_RAW_ID",
+              "type": "Expression"
+            },
+            "LoadType": "fact"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "R2R - Flatten facts",
+        "description": "Read source Json files\nFlatten data \nAppend to Tables",
+        "dependsOn": [
+          {
+            "activity": "R2R - Flatten dimensions",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource"
+          },
+          "datasetSettings": {
+            "type": "LakehouseTable",
+            "typeProperties": {
+              "table": "ETL_LastStagedDates"
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "DE_LH_CONTROL",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "162b66b4-887b-b7d6-4ca3-bb9093c27ff5",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000",
+                  "rootFolder": "Tables"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.1:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get max date",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "Workspace_ID": {
+        "type": "string",
+        "defaultValue": "809b2e69-e0f0-4edd-b871-3be52fbf6a09"
+      },
+      "DE_NB_ApiToRaw_ID": {
+        "type": "string",
+        "defaultValue": "9d9ff305-1896-45ef-872a-afd18b11952d"
+      },
+      "DE_LH_100_RAW_ID": {
+        "type": "string",
+        "defaultValue": "247c8ebb-ebc0-4b3d-87ad-85bce0ebbf1f"
+      },
+      "DE_NB_ArchiveFiles_ID": {
+        "type": "string",
+        "defaultValue": "5d6d498a-0464-4866-9427-86fdd120d0a7"
+      },
+      "DE_LH_CONTROL_ID": {
+        "type": "string",
+        "defaultValue": "93c27ff5-bb90-4ca3-b7d6-887b162b66b4"
+      }
+    }
+  }
+}

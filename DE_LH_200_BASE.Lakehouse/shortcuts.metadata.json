@@ -1,0 +1,27 @@
+[
+  {
+    "name": "fact_discounts",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/fact_discounts",
+        "itemId": "10542b56-073e-a629-4a32-c36a17eb4c2e",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "artifactType": "Lakehouse"
+      }
+    }
+  },
+  {
+    "name": "dim_date",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/dim_date",
+        "itemId": "2ec657c7-c47e-42e7-871e-14d801cdbb8e",
+        "workspaceId": "809b2e69-e0f0-4edd-b871-3be52fbf6a09"
+      }
+    }
+  }
+]

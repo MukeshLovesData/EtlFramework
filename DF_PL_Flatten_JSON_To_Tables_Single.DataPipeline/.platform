@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "DF_PL_Flatten_JSON_To_Tables_Single"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "332c5358-1dd2-bb89-4aaa-2d32064a90e2"
+  }
+}

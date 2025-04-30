@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "DF_PL_100_Stage_Oracle"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "495afc60-001b-8038-4262-dbaf8841b63e"
+  }
+}

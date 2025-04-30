@@ -1,0 +1,76 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Teams",
+        "typeProperties": {
+          "inputs": {
+            "body": {
+              "recipient": "19:637fcee55c1f4d8f99eeec5c6ffded19@thread.v2",
+              "messageBody": "<p>Scandi Pipeline Successful</p>"
+            },
+            "method": "post",
+            "path": "/beta/teams/conversation/message/poster/User/location/Group chat"
+          }
+        },
+        "name": "OnSuccess",
+        "dependsOn": [
+          {
+            "activity": "Invoke pipeline1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Teams",
+        "typeProperties": {
+          "inputs": {
+            "body": {
+              "recipient": "19:637fcee55c1f4d8f99eeec5c6ffded19@thread.v2",
+              "messageBody": "<p>Scandi pipeline Failed :</p>\n<p><br></p>\n<p><br></p>\n<p>@{activity('Invoke pipeline1').output}</p>"
+            },
+            "method": "post",
+            "path": "/beta/teams/conversation/message/poster/User/location/Group chat"
+          }
+        },
+        "name": "OnFailure",
+        "dependsOn": [
+          {
+            "activity": "Invoke pipeline1",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {
+            "Workspace_ID": "809b2e69-e0f0-4edd-b871-3be52fbf6a09",
+            "DE_NB_ApiToRaw_ID": "9d9ff305-1896-45ef-872a-afd18b11952d",
+            "DE_NB_DeltaToDelta_ID": "46425889-78af-4520-a096-258cb0a05d36"
+          },
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "d71593dd-a86e-a44a-419c-2c3cf9b3eb92",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "a319f7aa-6b6a-4a88-88eb-c3f9d59e064b"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Invoke pipeline1",
+        "dependsOn": []
+      }
+    ]
+  }
+}

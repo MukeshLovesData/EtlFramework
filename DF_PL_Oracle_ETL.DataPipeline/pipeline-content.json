@@ -1,0 +1,558 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "495afc60-001b-8038-4262-dbaf8841b63e",
+            "type": "PipelineReference"
+          },
+          "parameters": {},
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Oracle To Raw",
+        "description": "Stage Oracle API data > Raw Files\nRaw Files > Flatten > Raw Tables\nArchive files",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "dedup",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "dim",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "R2B - Dedup Dim",
+        "description": "Raw Tables > Dedup > Base Tables",
+        "dependsOn": [
+          {
+            "activity": "Oracle To Raw",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "load",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "dim",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "B2C - Load Dim",
+        "dependsOn": [
+          {
+            "activity": "R2B - Dedup Dim",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "R2B - Sharepoint files",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "RLS",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Load sharepoint list",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "dedup",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "fact",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "R2B - Dedup Fact",
+        "description": "Raw Tables > Dedup > Base Tables",
+        "dependsOn": [
+          {
+            "activity": "B2C - Load Dim",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "load",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "intermediate",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "B2I - Load Intermediate",
+        "dependsOn": [
+          {
+            "activity": "R2B - Dedup Fact",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshDataflow",
+        "typeProperties": {
+          "dataflowId": "4e163b63-00e0-4228-b5ce-2c40d8f568e4",
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "notifyOption": "NoNotification",
+          "dataflowType": "Dataflow-Gen2"
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Sharepoint To Raw",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "dedup",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "sharepoint",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "R2B - Sharepoint files",
+        "dependsOn": [
+          {
+            "activity": "Sharepoint To Raw",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "load",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "fact",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "B2C - Load Facts",
+        "dependsOn": [
+          {
+            "activity": "B2I - Load Intermediate",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.DE_NB_DeltaToDelta_ID",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().parameters.Workspace_ID",
+            "type": "Expression"
+          },
+          "parameters": {
+            "load_group": {
+              "value": "load",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "agg",
+              "type": "string"
+            },
+            "pipeline_runid": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Aggregate Sales",
+        "dependsOn": [
+          {
+            "activity": "B2C - Load Facts",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PBISemanticModelRefresh",
+        "typeProperties": {
+          "method": "post",
+          "groupId": "5d4a29f0-0cd2-4743-9e81-a4b925eb2934",
+          "datasetId": "eccd6062-2bf0-45e4-8c8a-673d857bc03b",
+          "commitMode": "Transactional",
+          "maxParallelism": 10,
+          "objects": [],
+          "waitOnCompletion": true,
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "171c29c1-2855-4901-8264-54cb0c84a1bc"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "POS Model v2",
+        "dependsOn": [
+          {
+            "activity": "SSS",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Teams",
+        "typeProperties": {
+          "inputs": {
+            "body": {
+              "recipient": "19:637fcee55c1f4d8f99eeec5c6ffded19@thread.v2",
+              "messageBody": "<p>@{activity('POS Model v2').output}</p>"
+            },
+            "method": "post",
+            "path": "/beta/teams/conversation/message/poster/User/location/Group chat"
+          }
+        },
+        "name": "Send notification",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "Decision Matrix",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "c4218f68-5ed6-8b03-4cc5-5594c543a584"
+        },
+        "policy": {
+          "timeout": "0.2:00:00",
+          "retry": 2,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "RLS",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "11ab6c97-e6e3-9035-45da-41177151fc1f",
+          "parameters": {
+            "load_group": {
+              "value": "load",
+              "type": "string"
+            },
+            "load_type": {
+              "value": "sss",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "SSS",
+        "dependsOn": [
+          {
+            "activity": "Aggregate Sales",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PBISemanticModelRefresh",
+        "typeProperties": {
+          "method": "post",
+          "groupId": "5d4a29f0-0cd2-4743-9e81-a4b925eb2934",
+          "datasetId": "1a5ba318-b6af-42b6-9b3f-5ce04d518e14",
+          "commitMode": "Transactional",
+          "maxParallelism": 10,
+          "objects": [],
+          "waitOnCompletion": true,
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "171c29c1-2855-4901-8264-54cb0c84a1bc"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Decision Matrix",
+        "dependsOn": [
+          {
+            "activity": "POS Model v2",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "InvokePipeline",
+        "typeProperties": {
+          "parameters": {},
+          "waitOnCompletion": true,
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "pipelineId": "dda87332-0030-b00d-4e2d-9d7e92d3eea9",
+          "operationType": "InvokeFabricPipeline"
+        },
+        "externalReferences": {
+          "connection": "a319f7aa-6b6a-4a88-88eb-c3f9d59e064b"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Load sharepoint list",
+        "description": "Extra cost",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "Workspace_ID": {
+        "type": "string",
+        "defaultValue": "809b2e69-e0f0-4edd-b871-3be52fbf6a09"
+      },
+      "DE_NB_ApiToRaw_ID": {
+        "type": "string",
+        "defaultValue": "9d9ff305-1896-45ef-872a-afd18b11952d"
+      },
+      "DE_NB_DeltaToDelta_ID": {
+        "type": "string",
+        "defaultValue": "46425889-78af-4520-a096-258cb0a05d36"
+      }
+    }
+  }
+}

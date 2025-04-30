@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Daily Transactions",
+        "type": "PBISemanticModelRefresh",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "method": "post",
+          "groupId": "5d4a29f0-0cd2-4743-9e81-a4b925eb2934",
+          "datasetId": "de4d2b48-8c1e-47a1-b809-14693fc8b5b8",
+          "waitOnCompletion": true,
+          "maxParallelism": 12,
+          "commitMode": "Transactional",
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "171c29c1-2855-4901-8264-54cb0c84a1bc"
+        }
+      }
+    ]
+  }
+}

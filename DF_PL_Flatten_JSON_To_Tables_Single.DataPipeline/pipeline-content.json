@@ -1,0 +1,3623 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Lookup ETLLoads",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 180,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": "select * from ETLLoads where LoadID = '293'",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "linkedService": {
+              "name": "DW_WH_ControlDB",
+              "properties": {
+                "annotations": [],
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "endpoint": "qnevyyf2jhmu7h7c6l5skmjzji-nexjxahq4dou5odrhpss7p3kbe.datawarehouse.fabric.microsoft.com",
+                  "artifactId": "2ec657c7-c47e-42e7-871e-14d801cdbb8e",
+                  "workspaceId": "809b2e69-e0f0-4edd-b871-3be52fbf6a09"
+                }
+              }
+            },
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "typeProperties": {}
+          }
+        }
+      },
+      {
+        "name": "ForEach",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "Lookup ETLLoads",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Lookup ETLLoads').output.value",
+            "type": "Expression"
+          },
+          "isSequential": false,
+          "activities": [
+            {
+              "name": "Switch",
+              "description": "Read json > Flatten > Write to Table",
+              "type": "Switch",
+              "dependsOn": [],
+              "typeProperties": {
+                "on": {
+                  "value": "@item().SourceEntityName",
+                  "type": "Expression"
+                },
+                "cases": [
+                  {
+                    "value": "discounts",
+                    "activities": [
+                      {
+                        "name": "Flatten discounts",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:10:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "a6be1813_189b_400d_8b65_f5d66d8a61f4",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "54ee4605_ca61_4631_b80c_68efe70facd4",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "schema": "",
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "discounts.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "discounts.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "discounts.posPercent",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "posPercent",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "name": "Update ETLLoads discounts",
+                        "type": "Script",
+                        "state": "Inactive",
+                        "onInactiveMarkAs": "Succeeded",
+                        "dependsOn": [
+                          {
+                            "activity": "Flatten discounts",
+                            "dependencyConditions": [
+                              "Succeeded"
+                            ]
+                          }
+                        ],
+                        "policy": {
+                          "timeout": "0.12:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "linkedService": {
+                          "name": "DW_WH_ControlDB",
+                          "properties": {
+                            "annotations": [],
+                            "type": "DataWarehouse",
+                            "typeProperties": {
+                              "endpoint": "qnevyyf2jhmu7h7c6l5skmjzji-xyfod45tmc4u7phkvcuc67l6we.datawarehouse.fabric.microsoft.com",
+                              "artifactId": "02d8a60b-e546-46f1-9485-73d8f4f4a712",
+                              "workspaceId": "f3e10abe-60b3-4fb9-bcea-a8a82f7d7eb1"
+                            }
+                          }
+                        },
+                        "typeProperties": {
+                          "scripts": [
+                            {
+                              "type": "NonQuery",
+                              "text": {
+                                "value": "Update ETLLoads\nset [RowCount] = @{activity('Copy discounts').output.rowsCopied},\nPipelineEndTime = cast('@{substring(replace(pipeline().TriggerTime,'T',' '),0,23)}' as datetime)\nwhere SinkEntityName = '@{item().SinkEntityName}'",
+                                "type": "Expression"
+                              }
+                            }
+                          ],
+                          "scriptBlockExecutionTimeout": "02:00:00"
+                        }
+                      },
+                      {
+                        "name": "Set variable1",
+                        "type": "SetVariable",
+                        "state": "Inactive",
+                        "onInactiveMarkAs": "Succeeded",
+                        "dependsOn": [
+                          {
+                            "activity": "Flatten discounts",
+                            "dependencyConditions": [
+                              "Succeeded"
+                            ]
+                          }
+                        ],
+                        "policy": {
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "variableName": "pipelineReturnValue",
+                          "value": [
+                            {
+                              "key": "discounts",
+                              "value": {
+                                "type": "Expression",
+                                "content": "@{activity('Copy discounts').output.rowsCopied}"
+                              }
+                            }
+                          ],
+                          "setSystemVariable": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "employees",
+                    "activities": [
+                      {
+                        "name": "Flatten employees",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "05137a82_2b8e_44a1_99c8_45c93558dfdb",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "3ed993f1_66e2_4a64_b754_d8d2044adfb6",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.employeeId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "employeeId",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.fName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "fName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.lName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "lName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.payrollId",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "payrollId",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.homeLocRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "homeLocRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.classNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "classNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "employees.className",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "className",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "locations",
+                    "activities": [
+                      {
+                        "name": "Flatten locations",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "ce416614_fdf6_419f_abe3_86d1f9395e8f",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "5fd0f111_0468_49d9_9a8a_07a6c142e219",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locations.locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.openDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "openDt",
+                                  "physicalType": "date"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.active",
+                                  "type": "Boolean"
+                                },
+                                "sink": {
+                                  "name": "active",
+                                  "physicalType": "boolean"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.srcName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "srcName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.srcVer",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "srcVer",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.tz",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "tz",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.workstations.wsNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "workstations.wsNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locations.workstations.wsName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "workstations.wsName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "curUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "curUTC",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "menuItems",
+                    "activities": [
+                      {
+                        "name": "Flatten menuItems",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "9501dfca_8497_43c6_9d9f_1cd264af6232",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "c367a6d9_6ad7_4a84_ae1a_cabfae1f3615",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "curUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "curUTC",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.name2",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name2",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.majGrpNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "majGrpNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.majGrpName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "majGrpName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.famGrpNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "famGrpNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "menuItems.famGrpName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "famGrpName",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "collectionReference": "",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "orderTypes",
+                    "activities": [
+                      {
+                        "name": "Flatten orderTypes",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "f68c17b6_1e86_416e_8bcd_b1764f1f8fbd",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "c3e49a94_cf56_4c40_bacc_5fdb3978a853",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "curUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "curUTC",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "orderTypes.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "orderTypes.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "reasonCodes",
+                    "activities": [
+                      {
+                        "name": "Flatten reasonCodes",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "7906b17f_48a4_48f7_a564_5fd0ad477a8c",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "c6b67438_906b_4bba_a03c_1ce15d1865e8",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "schema": "",
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "reasonCodes.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "reasonCodes.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "revenueCenters",
+                    "activities": [
+                      {
+                        "name": "Flatten revenueCenters",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "7de12a19_097f_4930_b22b_d90ca7abcdbb",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "1859f4cf_017f_4afc_9aae_382aa026d994",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "curUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "curUTC",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "serviceCharges",
+                    "activities": [
+                      {
+                        "name": "Flatten serviceCharges",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "d57a3c41_3324_4668_9ef7_be0df0791f18",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "848e82a3_d3cf_41c0_b6ac_49b1bb317d18",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "serviceCharges.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "serviceCharges.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "serviceCharges.posPercent",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "posPercent",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "serviceCharges.chrgTipsFlag",
+                                  "type": "Boolean"
+                                },
+                                "sink": {
+                                  "name": "chrgTipsFlag",
+                                  "physicalType": "boolean"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "serviceCharges.revFlag",
+                                  "type": "Boolean"
+                                },
+                                "sink": {
+                                  "name": "revFlag",
+                                  "physicalType": "boolean"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "taxes",
+                    "activities": [
+                      {
+                        "name": "Flatten taxes",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "83040ff0_08a9_4c41_ba83_7144b0c4d422",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "0126cf02_8177_41e9_a34c_c2ee01127e3c",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "taxes.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "taxes.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "taxes.type",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "type",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "taxes.taxRate",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "taxRate",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "tenderMedias",
+                    "activities": [
+                      {
+                        "name": "Flatten tenderMedias",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.0:30:00",
+                          "retry": 3,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "6c67bb04_f391_4480_8d20_5954ec64ebec",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "9927bddb_8c51_4786_a061_8988fb6f5b43",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "tenderMedias.num",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "num",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "tenderMedias.name",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "tenderMedias.type",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "type",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "guestChecks",
+                    "activities": [
+                      {
+                        "name": "Flatten guestChecks",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.5:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "06f2fd46_2ba4_4418_bce7_ce22c4b27bbc",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "89eccf5b_e186_4b9b_9aae_7d781b800de9",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "schema": "",
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "parallelCopies": 6,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "curUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "curUTC",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "location_id",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.guestCheckId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "transaction_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.chkNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "check_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.opnBusDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_open_date",
+                                  "physicalType": "date"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.opnUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_open_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.opnLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_open_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.clsdBusDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_closed_date",
+                                  "physicalType": "date"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.clsdUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_closed_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.clsdLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_closed_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.lastTransUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "last_transaction_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.lastTransLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "last_transaction_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.lastUpdatedUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_last_updated_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.lastUpdatedLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transaction_last_updated_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.clsdFlag",
+                                  "type": "Boolean"
+                                },
+                                "sink": {
+                                  "name": "is_closed",
+                                  "physicalType": "boolean"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.subTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "sub_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.nonTxblSlsTtl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "non_taxable_sales_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.chkTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "transaction_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.dscTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "discount_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.payTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "pay_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.balDueTtl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "balance_due_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.rvcNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "channel_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.otNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "transaction_type_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.empNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "employee_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.chkInfo",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "check_information",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.taxes.taxNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "tax_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.taxes.txblSlsTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "taxable_sales_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.taxes.taxCollTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "tax_collected_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.taxes.taxRate",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "tax_rate",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.taxes.type",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "tax_type",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.guestCheckLineItemId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "transaction_line_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.dtlOtNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "line_transaction_type_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.lineNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "line_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.dtlId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "line_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.parDtlId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "parent_line_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.busDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "line_business_date",
+                                  "physicalType": "date"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.detailUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "line_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.detailLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "line_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.lastUpdateUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "line_last_updated_datetime_utc",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.lastUpdateLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "line_last_updated_datetime_local",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.prepCost",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "prep_cost",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.wsNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "till_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.dspTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "display_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.dspQty",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "display_quantity",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.aggTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "aggregate_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.aggQty",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "aggregate_quantity",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.chkEmpId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "line_employee_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.chkEmpNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "line_employee_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.svcRndNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "service_round_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.miNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "item_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.inclTax",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "item_inclusive_tax",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.activeTaxes",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "item_active_taxes",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.prcLvl",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "item_price_level",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.refInfo1",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "reference_information",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.other.detailType",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "detail_type",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.other.detailNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "detail_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.tenderMedia.tmedNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "tender_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.comboMealSeq",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "item_combo_meal_sequence",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.menuItem.comboGrpNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "item_combo_group_number",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.dscNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "discount_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.dscMiNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "discount_item_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.mealEmpNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "discount_for_employee_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.vatTaxTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "discount_tax_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.inclTax",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "discount_inclusive_tax",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.discount.activeTaxes",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "discount_active_tax",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.errCorFlag",
+                                  "type": "Boolean"
+                                },
+                                "sink": {
+                                  "name": "is_error_correct",
+                                  "physicalType": "boolean"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.errorCorrect.type",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "error_correct_type",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "guestChecks.detailLines.errorCorrect.objectNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "error_correct_item_id",
+                                  "physicalType": "integer"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "menuItemDailyTotals",
+                    "activities": [
+                      {
+                        "name": "Flatten menuItemDailyTotals",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.5:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "c96de621_b33a_4b32_a1b1_3bef0410f805",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "b97df23a_f8f7_4aad_b4e7_27cb95bfb31a",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "parallelCopies": 12,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "location_id",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "busDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "business_date",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.rvcNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "channel_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.miNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "menu_item_number",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.prcLvlNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "price_level_number",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.otNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "transaction_type_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.slsTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "sales_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.slsCnt",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "sales_count",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.prepCost",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "prep_cost",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.vatTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "vat_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.dscTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "discount_total",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.dscVatTtl",
+                                  "type": "Double"
+                                },
+                                "sink": {
+                                  "name": "discount_vat",
+                                  "physicalType": "double"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "collectionReference": "",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "kdsDetails",
+                    "activities": [
+                      {
+                        "name": "Flatten kdsDetails",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.2:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "16214850_8966_4b17_bfd4_28bfb22d4730",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "cbdc268b_f6c4_4c84_97f4_c73b527a7677",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "parallelCopies": 1,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "location_id",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "busDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "business_date",
+                                  "physicalType": "timestamp"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.rvcNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "channel_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.orders.guestCheckId",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "transaction_id",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.orders.stationName",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "station_name",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.orders.prepTimeInSecs",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "prep_time_in_seconds",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "long"
+                                }
+                              }
+                            ],
+                            "collectionReference": "",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        },
+                        "scheduler": {
+                          "parallelCopies": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "value": "POSWasteDetails",
+                    "activities": [
+                      {
+                        "name": "POSWasteDetails",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                          "timeout": "0.2:00:00",
+                          "retry": 0,
+                          "retryIntervalInSeconds": 30,
+                          "secureOutput": false,
+                          "secureInput": false
+                        },
+                        "typeProperties": {
+                          "source": {
+                            "type": "JsonSource",
+                            "additionalColumns": [
+                              {
+                                "name": "filename",
+                                "value": "$$FILENAME"
+                              },
+                              {
+                                "name": "flattened_at",
+                                "value": {
+                                  "value": "@substring(replace(replace(replace(utcnow(),'-',''),'T',''),':',''),0,14)",
+                                  "type": "Expression"
+                                }
+                              }
+                            ],
+                            "storeSettings": {
+                              "type": "LakehouseReadSettings",
+                              "recursive": false,
+                              "enablePartitionDiscovery": false
+                            },
+                            "formatSettings": {
+                              "type": "JsonReadSettings"
+                            },
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "16214850_8966_4b17_bfd4_28bfb22d4730",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Files"
+                                  }
+                                }
+                              },
+                              "type": "Json",
+                              "typeProperties": {
+                                "location": {
+                                  "type": "LakehouseLocation",
+                                  "folderPath": {
+                                    "value": "@item().SourceEntityName",
+                                    "type": "Expression"
+                                  }
+                                }
+                              },
+                              "schema": {}
+                            }
+                          },
+                          "sink": {
+                            "type": "LakehouseTableSink",
+                            "tableActionOption": "Append",
+                            "partitionOption": "None",
+                            "datasetSettings": {
+                              "annotations": [],
+                              "linkedService": {
+                                "name": "cbdc268b_f6c4_4c84_97f4_c73b527a7677",
+                                "properties": {
+                                  "annotations": [],
+                                  "type": "Lakehouse",
+                                  "typeProperties": {
+                                    "workspaceId": "@pipeline().parameters.Workspace_ID",
+                                    "artifactId": "@pipeline().parameters.DE_LH_100_RAW_ID",
+                                    "rootFolder": "Tables"
+                                  }
+                                }
+                              },
+                              "type": "LakehouseTable",
+                              "schema": [],
+                              "typeProperties": {
+                                "table": {
+                                  "value": "@item().SinkEntityName",
+                                  "type": "Expression"
+                                }
+                              }
+                            }
+                          },
+                          "enableStaging": false,
+                          "parallelCopies": 1,
+                          "translator": {
+                            "type": "TabularTranslator",
+                            "mappings": [
+                              {
+                                "source": {
+                                  "name": "locRef",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "locRef",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "busDt",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "busDt",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.rvcNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "rvcNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.miNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "miNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.rsnCodeNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "rsnCodeNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.empNum",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "empNum",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.cnt",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "count",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.weight",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "weight",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.ttl",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "total",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.prepCost",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "prepCost",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.prcLvl",
+                                  "type": "Int64"
+                                },
+                                "sink": {
+                                  "name": "prcLvl",
+                                  "physicalType": "long"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.transUTC",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transUTC",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "revenueCenters.menuItems.transLcl",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "transLcl",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "filename",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "filename",
+                                  "physicalType": "string"
+                                }
+                              },
+                              {
+                                "source": {
+                                  "name": "flattened_at",
+                                  "type": "String"
+                                },
+                                "sink": {
+                                  "name": "flattened_at",
+                                  "physicalType": "string"
+                                }
+                              }
+                            ],
+                            "collectionReference": "",
+                            "typeConversion": true,
+                            "typeConversionSettings": {
+                              "allowDataTruncation": true,
+                              "treatBooleanAsNumber": false
+                            },
+                            "columnFlattenSettings": {
+                              "treatArrayAsString": false,
+                              "treatStructAsString": false,
+                              "flattenColumnDelimiter": "."
+                            }
+                          }
+                        },
+                        "scheduler": {
+                          "parallelCopies": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "defaultActivities": []
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "parameters": {
+      "LoadGroup": {
+        "type": "string",
+        "defaultValue": "flatt"
+      },
+      "Workspace_ID": {
+        "type": "string",
+        "defaultValue": "809b2e69-e0f0-4edd-b871-3be52fbf6a09"
+      },
+      "DE_LH_100_RAW_ID": {
+        "type": "string",
+        "defaultValue": "247c8ebb-ebc0-4b3d-87ad-85bce0ebbf1f"
+      },
+      "LoadType": {
+        "type": "string"
+      }
+    }
+  }
+}
