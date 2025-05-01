@@ -97,33 +97,16 @@ de_lh_control_id = '93c27ff5-bb90-4ca3-b7d6-887b162b66b4'
 
 # 1. authorize
 def authorize():
-    url = f"{Oracle_AuthURL}/oidc-provider/v1/oauth2/authorize?response_type=code&client_id={Oracle_ClientID}&scope=openid&redirect_uri=apiaccount://callback&code_challenge={Oracle_CodeChallenge}&code_challenge_method=S256"
-
-    payload = {}
-    headers = {
-        'Cookie': f"client_id={Oracle_ClientID}; code_challenge={Oracle_CodeChallenge}; code_challenge_method=S256; redirect_uri=apiaccount://callback; response_type=code; state="   
-    }
-    
-    response = requests.request("GET", url, headers=headers, data=payload)
-
-    #return response.text
+   
     return response.status_code
 
 # 2. sign-in
 def signin():
-    url = f"{Oracle_AuthURL}/oidc-provider/v1/oauth2/signin"
-
-    payload = f"username={Oracle_APIUsername}&password={Oracle_APIPassword}&orgname={Oracle_APIOrgName}"
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': f"client_id={Oracle_ClientID}; code_challenge={Oracle_CodeChallenge}; code_challenge_method=S256; redirect_uri=apiaccount://callback; response_type=code; state="    
-    }      
-
-    response = requests.request("POST", url, headers=headers, data=payload)
+    
     return response.text
 
 authorize()
-print(authorize())
+
 # 2a. get auth_code
 signin_response = json.loads(signin())
 print(signin_response)
@@ -134,12 +117,6 @@ auth_code = redirect_url.split('code=')[1]
 # 3. OAuth Token
 def oauth_token():
   url = f"{Oracle_AuthURL}/oidc-provider/v1/oauth2/token"
-
-  payload = f"scope=openid&grant_type=authorization_code&client_id={Oracle_ClientID}&code_verifier={Oracle_CodeVerifier}&code={auth_code}&redirect_uri=apiaccount://callback"
-  headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Cookie': f"client_id={Oracle_ClientID}; code_challenge={Oracle_CodeChallenge}; code_challenge_method=S256; redirect_uri=apiaccount://callback; response_type=code; state="    
-  }
 
   response = requests.request("POST", url, headers=headers, data=payload)
   return response.text
@@ -153,7 +130,7 @@ print(access_token)
 headers = {
     'Content-Type': 'application/json',
     'Authorization': f"Bearer {access_token}",
-    'Cookie': f"client_id='{Oracle_ClientID}'; code_challenge='{Oracle_CodeChallenge}'; code_challenge_method=S256; redirect_uri=apiaccount://callback; response_type=code; state="
+    'Cookie': f"client_id='{Oracle_ClientID}'; "
 }
 
 # METADATA ********************
